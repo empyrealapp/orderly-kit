@@ -2,6 +2,8 @@ from enum import StrEnum
 
 
 class Interval(StrEnum):
+    """Timeframe Intervals for trading view"""
+
     minute = "1"
     five_minute = "5"
     fifteen_minute = "15"

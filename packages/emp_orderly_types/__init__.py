@@ -1,6 +1,9 @@
+"""Introduce the core types for interacting with Orderly
+
+This module creates Pydantic BaseModel's for all the core data structures
+"""
+
 from .assets import PerpetualAssetType
-from .bot import BotType
-from .grid import GridSpacing
 from .interval import Interval
 from .market import MarketInfo
 from .orders import Order, OrderResponse, OrderType
@@ -10,8 +13,6 @@ from .status import OrderStatus, Status
 
 
 __all__ = [
-    "BotType",
-    "GridSpacing",
     "Interval",
     "MarketInfo",
     "Order",

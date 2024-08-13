@@ -3,6 +3,8 @@ from typing import Any
 
 
 class PerpetualAssetType(str, Enum):
+    """An Enum of all supported Perpetual Asset Types"""
+
     BTC = "PERP_BTC_USDC"
     ETH = "PERP_ETH_USDC"
     WOO = "PERP_WOO_USDC"
@@ -53,7 +55,23 @@ class PerpetualAssetType(str, Enum):
     UNKNOWN = "UNKNOWN"
 
     @staticmethod
-    def to_perp_or_unk(value: Any, handler, info) -> "PerpetualAssetType":
+    def to_perp_or_unk(value: Any, handler=None, info=None) -> "PerpetualAssetType":
+        """
+        The function `to_perp_or_unk` takes a value, tries to create a `PerpetualAssetType` object from it,
+        and returns `PerpetualAssetType.UNKNOWN` if there is a `ValueError`.
+
+        Examples:
+            >>> PerpetualAssetType("PERP_ZRO_USDC")
+            PerpetualAssetType.ZRO
+            >>> PerpetualAssetType("????")
+            PerpetualAssetType.UNKNOWN
+
+        Args:
+            value (Any): The `value` parameter in the `to_perp_or_unk` function is the input value that will be used to create a `PerpetualAssetType` object. The function will attempt to create a `PerpetualAssetType` object from this value. If the value is valid
+
+        Returns:
+            PerpetualAssetType: a `PerpetualAssetType` object
+        """
         try:
             return PerpetualAssetType(value)
         except ValueError:

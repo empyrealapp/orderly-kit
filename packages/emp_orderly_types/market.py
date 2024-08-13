@@ -7,6 +7,17 @@ from .assets import PerpetualAssetType
 
 
 class MarketInfo(BaseModel):
+    """This class `MarketInfo` defines attributes for market information including symbol, prices,
+    funding rates, time, open interest, and 24-hour trading data.  It is used when fetching from the
+    orderly API
+
+
+    Attributes
+    ----------
+    symbol : [PerpetualAssetType](assets.md)
+        This is the asset for the market info
+    """
+
     symbol: PerpetualAssetType
     index_price: Decimal
     mark_price: Decimal
