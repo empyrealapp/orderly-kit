@@ -1,0 +1,15 @@
+site_name: Orderly-Kit
+
+theme:
+  name: "readthedocs"
+
+plugins:
+  - mkdocstrings
+
+nav:
+  - Orderly-Kit: index.md
+  - SDK: sdk.md
+  - Types:
+    - Assets: assets.md
+    - Intervals: intervals.md
+    - "Market Info": market.md
