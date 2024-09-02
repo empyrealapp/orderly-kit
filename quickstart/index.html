@@ -236,6 +236,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deposit-to-your-orderly-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deposit to your orderly account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#make-a-limit-order" class="md-nav__link">
     <span class="md-ellipsis">
       Make a limit order
@@ -437,6 +446,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#deposit-to-your-orderly-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deposit to your orderly account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#make-a-limit-order" class="md-nav__link">
     <span class="md-ellipsis">
       Make a limit order
@@ -488,17 +506,22 @@
 <p>A simplified version of the tutorial.</p>
 </blockquote>
 <h2 id="import-and-setup-your-sdk">Import and setup your SDK</h2>
-<pre><code class="language-python">from emp_orderly import (
+<pre><code class="language-python">import os
+
+from emp_orderly import (
     Strategy, EmpOrderly,
     crossover, plot_heatmaps,
     EMA, SMA, SLOPE, CHOP,
     EmpyrealOrderlySDK,
 )
 from emp_orderly_types import PerpetualAssetType, Interval, OrderType
-sdk = EmpyrealOrderlySDK(
-    account_id=os.environ['ORDERLY_ACCOUNT_ID']
-    pvt_hex=os.environ['ORDERLY_PRIVATE_KEY'],
-)
+
+pvt_hex = os.environ[&quot;PVT_KEY_HEX&quot;]
+sdk = EmpyrealOrderlySDK.register(pvt_hex)
+</code></pre>
+<h3 id="deposit-to-your-orderly-account">Deposit to your orderly account</h3>
+<p>Make sure to fund your wallet with USDC (or another valid deposit token)</p>
+<pre><code class="language-python">TBD
 </code></pre>
 <h3 id="make-a-limit-order">Make a limit order</h3>
 <pre><code class="language-python"># make limit order for bitcoin at $59000
