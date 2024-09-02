@@ -1,0 +1,664 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tooling for the Orderly Network">
+      
+      
+        <meta name="author" content="EmpyrealSDK">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Key Concepts in Perpetual Trading - Orderly-Kit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#key-concepts-in-perpetual-trading" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Orderly-Kit" class="md-header__button md-logo" aria-label="Orderly-Kit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Orderly-Kit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Key Concepts in Perpetual Trading
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Orderly-Kit" class="md-nav__button md-logo" aria-label="Orderly-Kit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Orderly-Kit
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orderly-Kit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perpetuals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Perpetuals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Types
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Types
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intervals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../market/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Market Info
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#order-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      Order Book
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#liquidity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Liquidity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spread" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spread
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-interest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Open Interest
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#position-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Position Size
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collateral" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collateral
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leverage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#funding-rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Funding Rates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mark-price" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mark Price
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-price" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index Price
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#last-price" class="md-nav__link">
+    <span class="md-ellipsis">
+      Last Price
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#liquidations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Liquidations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintenance-margin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintenance Margin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-margin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial Margin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-margin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Margin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-de-leveraging-adl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Auto De-leveraging (ADL)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cost Position
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taker-fee" class="md-nav__link">
+    <span class="md-ellipsis">
+      Taker Fee
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maker-fee" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maker Fee
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#funding-fee" class="md-nav__link">
+    <span class="md-ellipsis">
+      Funding Fee
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrealizedunsettled-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unrealized/Unsettled PnL
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="key-concepts-in-perpetual-trading">Key Concepts in Perpetual Trading</h1>
+<h2 id="order-book">Order Book</h2>
+<p>The orderbook lists all buy and sell orders for a particular asset, organized by price and quantity. It shows the supply and demand in the market.</p>
+<h2 id="liquidity">Liquidity</h2>
+<p>Liquidity refers to the availability of assets for trading on an exchange or market. High liquidity means that assets can be traded quickly and with minimal price impact.</p>
+<h2 id="spread">Spread</h2>
+<p>The spread is the difference between the highest price a buyer is willing to pay (bid) and the lowest price a seller will accept (ask). A smaller spread indicates a lower price impact due to higher market efficiency.</p>
+<h2 id="open-interest">Open Interest</h2>
+<p>Open interest is the total number of outstanding contracts for a particular derivative contract. It is a measure of market depth and indicates the market activity level.</p>
+<h2 id="position-size">Position Size</h2>
+<p>Position size refers to the total value of the asset that a trader holds in a particular trade. In leveraged trading, the position size is determined by the amount of collateral and the leverage applied. Position size is important because it influences both potential profits and risks.</p>
+<h2 id="collateral">Collateral</h2>
+<p>Collateral is the asset traders must deposit to open and maintain a position in a perpetual contract. It serves as security to cover potential losses. The amount of required collateral depends on the leverage used and the position size. Sufficient collateral is crucial to avoid liquidation.</p>
+<h2 id="leverage">Leverage</h2>
+<p>Leverage allows traders to amplify their position size by borrowing funds, enabling them to control larger positions with less capital. For example, with 10x leverage, a trader can open a 1 BTC position with just 6,400 USDC as collateral, even if the current BTC price is 64,000 USDC. While leverage increases potential profits, it also magnifies potential losses.</p>
+<h2 id="funding-rates">Funding Rates</h2>
+<p>Funding rates are periodic payments exchanged between traders holding long and short positions in a perpetual contract. The purpose of funding rates is to keep the contract's price aligned with the spot price of the underlying asset. Depending on market conditions, either long or short-position holders may need to pay the other side.</p>
+<p>The funding fee is calculated based on the difference between the index price and the mark price, as well as the interest rate for leverage trading.</p>
+<h2 id="mark-price">Mark Price</h2>
+<p>The Mark Price represents the best estimate of a perpetual futures contract’s value and is less volatile than the index or last price. It serves as the reference price for a perpetual contract and is used to prevent unnecessary liquidations caused by market manipulation.</p>
+<h2 id="index-price">Index Price</h2>
+<p>The Index Price is the volume-weighted average of the underlying asset prices listed on major spot exchanges. It is used as a reference for pricing perpetual contracts.</p>
+<h2 id="last-price">Last Price</h2>
+<p>The Last Price refers to the most recent traded price of the contract. It is often used to calculate PnL but is less reliable for preventing liquidation than the Mark Price.</p>
+<h2 id="liquidations">Liquidations</h2>
+<p>Liquidation occurs when a trader’s position is forcibly closed by the exchange due to insufficient collateral to cover potential losses. This typically happens when the market moves against the trader’s position, causing the collateral to fall below the required maintenance margin. Liquidations are essential for preventing further losses and protecting the exchange’s liquidity.</p>
+<h2 id="maintenance-margin">Maintenance Margin</h2>
+<p>The maintenance margin is the minimum amount of collateral required to keep a position open. If a trader’s margin falls below this level, their position may be liquidated.</p>
+<h2 id="initial-margin">Initial Margin</h2>
+<p>The initial margin is the amount of collateral needed to open a position. This requirement varies depending on the market and leverage used.</p>
+<h2 id="cross-margin">Cross-Margin</h2>
+<p>Cross-margin is a margin system where the collateral across multiple positions in a trader’s account is pooled together. This approach reduces the risk of liquidation by allowing profits from one position to offset losses in another. However, it also increases overall risk, as significant losses in one position can impact the entire account.</p>
+<h2 id="auto-de-leveraging-adl">Auto De-leveraging (ADL)</h2>
+<p>Auto de-leveraging is a mechanism that automatically liquidates positions when their margin falls below a certain level if other liquidation mechanisms fail. It is designed to protect the exchange from losses during extreme market conditions.</p>
+<h2 id="cost-position">Cost Position</h2>
+<p>The cost position is the average price at which a trader opens their position, including any associated costs like trading and funding fees. It is used to calculate unrealized PnL.</p>
+<h2 id="taker-fee">Taker Fee</h2>
+<p>A taker fee is charged to traders who execute orders that immediately remove liquidity from the order book, typically through market orders.</p>
+<h2 id="maker-fee">Maker Fee</h2>
+<p>A maker fee is charged to traders who place orders that add liquidity to the order book, typically through limit orders.</p>
+<h2 id="funding-fee">Funding Fee</h2>
+<p>References the funding rate, a periodic payment made between long and short traders to keep perpetual positions close to the market price of the underlying asset.</p>
+<h2 id="unrealizedunsettled-pnl">Unrealized/Unsettled PnL</h2>
+<p>Unrealized PnL (Profit and Loss) refers to the potential profit or loss of an open trading position that has not yet been closed or settled. It represents the difference between the current market value of the asset and the entry price at which the position was opened.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
