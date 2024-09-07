@@ -1,15 +1,78 @@
 site_name: Orderly-Kit
+site_description: Tooling for the Orderly Network
+site_author: EmpyrealSDK
 
 theme:
-  name: "readthedocs"
+  name: material
+  custom_dir: docs/.overrides
+  logo: logo.png
+  features:
+  - announce.dismiss
+  - content.action.edit
+  - content.action.view
+  - content.code.annotate
+  - content.code.copy
+  - content.tooltips
+  - navigation.footer
+  - navigation.indexes
+  - navigation.sections
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - navigation.top
+  - search.highlight
+  - search.suggest
+  - toc.follow
+  palette:
+  - media: "(prefers-color-scheme)"
+    toggle:
+      icon: material/brightness-auto
+      name: Switch to light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default
+    primary: teal
+    accent: purple
+    toggle:
+      icon: material/weather-sunny
+      name: Switch to dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    primary: black
+    accent: lime
+    toggle:
+      icon: material/weather-night
+      name: Switch to system preference
 
 plugins:
-  - mkdocstrings
+- mkdocstrings:
+    default_handler: python
+    handlers:
+      python:
+        options:
+          show_signature_annotations: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
 
 nav:
-  - Orderly-Kit: index.md
-  - SDK: sdk.md
+  - Orderly-Kit:
+    - Home: index.md
+    - Quickstart: quickstart.md
+    - Perpetuals 101: perpetuals.md
+    - "Getting Started": getting_started.md
+    - Strategies: strategy.md
+  - Glossary: glossary.md
   - Types:
+    - SDK: sdk.md
     - Assets: assets.md
     - Intervals: intervals.md
     - "Market Info": market.md

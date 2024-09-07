@@ -55,7 +55,7 @@ class PerpetualAssetType(str, Enum):
     UNKNOWN = "UNKNOWN"
 
     @staticmethod
-    def to_perp_or_unk(value: Any, handler=None, info=None) -> "PerpetualAssetType":
+    def to_perp_or_unk(value, handler) -> "PerpetualAssetType":
         """
         The function `to_perp_or_unk` takes a value, tries to create a `PerpetualAssetType` object from it,
         and returns `PerpetualAssetType.UNKNOWN` if there is a `ValueError`.
