@@ -473,6 +473,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#opening-a-limit-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opening a Limit Order
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#close-our-positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Close Our Positions
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -715,6 +733,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#opening-a-limit-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opening a Limit Order
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#close-our-positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Close Our Positions
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -796,20 +832,24 @@ For this example, we are going to assume you are using Arbitrum Sepolia.</p>
 </span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="n">response</span><span class="p">:</span> <span class="n">OrderResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">make_order</span><span class="p">(</span> <span class="n">purchase_amount</span><span class="p">,</span> <span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">,</span> <span class="n">is_buy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="n">positions</span><span class="p">:</span> <span class="n">PositionData</span> <span class="o">=</span> <span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">positions</span><span class="p">()</span>
 </span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># let&#39;s print our current bitcoin position (assuming we have no other positions open)</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="nb">print</span><span class="p">(</span><span class="n">positions</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="n">take_profit_price</span><span class="p">:</span> <span class="n">Decimal</span> <span class="o">=</span> <span class="p">(</span><span class="n">bitcoin_price</span> <span class="o">*</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">quote_tick</span><span class="p">)</span>
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">make_limit_order</span><span class="p">(</span><span class="s1">&#39;0.0005&#39;</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="n">take_profit_price</span><span class="p">,</span> <span class="n">asset</span><span class="o">=</span><span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">,</span> <span class="n">is_buy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
-</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="c1"># get all unfulfilled orders to see your open bitcoin order</span>
-</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="n">orders</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Order</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">orders</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">&quot;INCOMPLETE&quot;</span><span class="p">)</span>
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
-</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="c1"># now, let&#39;s close our open limit order</span>
-</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">close_orders</span><span class="p">(</span><span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">)</span>
-</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>
-</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="c1"># and we can close our bitcoin position</span>
-</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">close_position</span><span class="p">(</span><span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">)</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># now we can see our current bitcoin position (assuming we have no other positions open)</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="nb">print</span><span class="p">([</span><span class="n">position</span> <span class="k">for</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">positions</span><span class="o">.</span><span class="n">rows</span> <span class="k">if</span> <span class="n">position</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">])</span>
+</span></code></pre></div>
+<h2 id="opening-a-limit-order">Opening a Limit Order</h2>
+<p>Lets open a long position on bitcoin and check its status to see how the SDK works</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">take_profit_price</span><span class="p">:</span> <span class="n">Decimal</span> <span class="o">=</span> <span class="p">(</span><span class="n">bitcoin_price</span> <span class="o">*</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">quote_tick</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">make_limit_order</span><span class="p">(</span><span class="s1">&#39;0.0005&#39;</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="n">take_profit_price</span><span class="p">,</span> <span class="n">asset</span><span class="o">=</span><span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">,</span> <span class="n">is_buy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># get all unfulfilled orders to see your open bitcoin order</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">orders</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Order</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">orders</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">&quot;INCOMPLETE&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="close-our-positions">Close Our Positions</h2>
+<p>Now we can close out our open orders and positions</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># now, let&#39;s close our open limit order</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">close_orders</span><span class="p">(</span><span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># and we can close our bitcoin position</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">await</span> <span class="n">sdk</span><span class="o">.</span><span class="n">close_position</span><span class="p">(</span><span class="n">PerpetualAssetType</span><span class="o">.</span><span class="n">BTC</span><span class="p">)</span>
 </span></code></pre></div>
 
 
