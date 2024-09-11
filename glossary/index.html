@@ -812,26 +812,49 @@ where:
 <p>The Mark Price represents the best estimate of a perpetual futures contract’s value and is less volatile than the index or last price. It serves as the reference price for a perpetual contract and is used to prevent unnecessary liquidations caused by market manipulation.</p>
 <p>It is mainly used to calculate unrealized profit and loss (PnL) and determine liquidation, aiming to protect traders from being liquidated unfairly due to sudden market movements or manipulation.</p>
 <h3 id="calculation_1">Calculation</h3>
-<div class="language-text highlight"><pre><span></span><code>To calculate it Orderly Network computes the Median Price of the three following components :
-Median Price = Median(P1, P2, Futures Price)
+<p>To calculate it Orderly Network computes the Median Price of the three following components :</p>
+<div class="language-text highlight"><pre><span></span><code>Median Price = Median(P1, P2, Futures Price)
 where:
     P1 = Index Price * (1 + Last Funding Rate * Time until next Funding / dt)
     P2 = Index Price + 15 Minute Moving Average[Basis]
     Futures Price = Median(Bid0, Ask0, Last_Price)
 
 Last Funding Rate is expressed on a 8h basis
+
 Basis = Median(Bid0, Ask0) - Index Price, calculated as a snapshot every minute
 dt = Funding Period = 8 hours
 </code></pre></div>
-<p>Then Orderly applies a cap to the Mark Price relative to the Index Price defined by Factor (see table below) and Cap/Floor funding (cf Funding Rate section)
-Mark Price = Clamp(Median Price, Index Price * (1 + Factor * Cap Funding), Index Price * (1 + Factor * Floor_funding))</p>
-<div class="language-text highlight"><pre><span></span><code>cap_funding and floor_funding depend on the perpetual market (cf Funding Rate section)
+<p>Then Orderly applies a cap to the Mark Price relative to the Index Price defined by Factor (see table below) and Cap/Floor funding (cf Funding Rate section)</p>
+<div class="language-text highlight"><pre><span></span><code>Mark Price = Clamp(Median Price, Index Price * (1 + Factor * Cap Funding), Index Price * (1 + Factor * Floor_funding))
+cap_funding and floor_funding depend on the perpetual market (cf Funding Rate section)
 </code></pre></div>
 <h2 id="summary-of-key-differences-between-mark-and-index-prices">Summary of Key Differences between Mark and Index Prices:</h2>
-<p>Aspect | Mark Price | Index Price |
-Definition | Smoothed price to avoid unfair liquidations | The fair market price of the asset, based on spot prices |
-Used For | Liquidations, calculating unrealized PnL | Calculating funding rates and as a reference for spot price |
-Volatility | Smoother to avoid unfair liquidations | Follows real-time market prices, more volatile |</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Mark Price</th>
+<th>Index Price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Definition</td>
+<td>Smoothed price to avoid unfair liquidations</td>
+<td>The fair market price of the asset, based on spot prices</td>
+</tr>
+<tr>
+<td>Used For</td>
+<td>Liquidations, calculating unrealized PnL</td>
+<td>Calculating funding rates and as a reference for spot price</td>
+</tr>
+<tr>
+<td>Volatility</td>
+<td>Smoother to avoid unfair liquidations</td>
+<td>Follows real-time market prices, more volatile</td>
+</tr>
+</tbody>
+</table>
 <p>In practice, the mark price is a protective measure, ensuring more stability for traders, while the index price reflects the broader market reality.</p>
 <h2 id="last-price">Last Price</h2>
 <p>The Last Price refers to the latest transaction price at which a perpetual contract was traded in the orderbook. Said differently, the Last Price simply corresponds to the last trade in the trading history. It is used to calculate the realized PnL (see Margin, leverage &amp; PnL section) and is less reliable for preventing liquidation than the Mark Price.</p>
@@ -883,7 +906,7 @@ As an Example: Account X has +20,000 USDC unsettled PnL with a balance of 100 US
 Then, settling Account X vs Account B will increase Account X’s balance by 5,000 USDC and decrease Account B’s balance by 5,000 USDC. Account X has a remaining unsettled PnL of 0 and a balance of 20,100 USDC. The settlement process ends since Account X has no remaining unsettled PnL.
 Settling PnL will NOT change the user’s balance as the displayed user balance already includes unsettled PnL in the calculation. Withdrawable balance will change after settling PnL as it doesn’t include unsettled profits in the calculation.
 All settling PnL does is move profits into the user’s account so the user can withdraw.</p>
-<h2 id="balance-formulas">Balance Formulas</h2>
+<h1 id="balance-formulas">Balance Formulas</h1>
 <h2 id="account-margin-ratio">Account Margin Ratio</h2>
 <p>Current margin ratio = total_collateral_value / sum(abs(notional_value_i))</p>
 <h2 id="total-collateral">Total Collateral</h2>
@@ -919,10 +942,32 @@ funding_rate = clamp [funding_function (Premium(dt)), cap_funding(perp_mkt), flo
 <li>Medium premiums : p1 &lt; | x | &lt; p2 ; slope2</li>
 <li>Large premium : p2 &lt; | x | &lt; p3 ; slope3</li>
 </ul>
-<p>Premium | p_i | slope_i |
-Low | x | &lt; 0.5% | 1/8
-Medium | 0.5% &lt; | x | &lt; 1.5% | 1/4
-Large | 1.5% &lt; | x | 1/2</p>
+<table>
+<thead>
+<tr>
+<th>Premium</th>
+<th>p_i</th>
+<th>slope_i</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low</td>
+<td><code>| x | &lt; 0.5%</code></td>
+<td>1/8</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td><code>0.5% &lt; | x | &lt; 1.5%</code></td>
+<td>1/4</td>
+</tr>
+<tr>
+<td>Large</td>
+<td><code>1.5% &lt; | x |</code></td>
+<td>1/2</td>
+</tr>
+</tbody>
+</table>
 <p>p_i and slope_i values are subject to changes.</p>
 <h2 id="funding-settlement">Funding Settlement</h2>
 <p>The accrued funding of a position of an account is settled when there is a PnL settlement being called on that account (see PnL settlement)</p>
@@ -944,17 +989,40 @@ High Tier Risk = Others,  Liquidators can claim 1 single symbol</p>
 <p>The amount of positions that need to be liquidated is calculated for both low tier and each symbol of high tier perp markets. Whenever possible, each amount is computed so that the Account Margin Ratio equals the Initial Margin Ratio.
 If the account has multiple positions in the low tier risk, the positions will be partially liquidated in a volume-weighted fashion.</p>
 <h2 id="liquidation-fee">Liquidation Fee</h2>
-<p>When an account is liquidated, a User Liquidation Fee is incurred. In Orderly, each market has its liquidation fee according to the table below.
-| Perp Market | Liquidation Fee |
-| BTC | 0.80% |
-| ETH | 0.80% |
-| Altcoins (10x) | 1.50% |
-| Altcoins (20x) | 2.40% |</p>
+<p>When an account is liquidated, a User Liquidation Fee is incurred. In Orderly, each market has its liquidation fee according to the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Perp Market</th>
+<th>Liquidation Fee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BTC</td>
+<td>0.80%</td>
+</tr>
+<tr>
+<td>ETH</td>
+<td>0.80%</td>
+</tr>
+<tr>
+<td>Altcoins (10x)</td>
+<td>1.50%</td>
+</tr>
+<tr>
+<td>Altcoins (20x)</td>
+<td>2.40%</td>
+</tr>
+</tbody>
+</table>
 <p>The overall User Liquidation Fee is calculated as follows:
-Low Tier Liquidation (multiple symbols):
-    User Liquidation Fee = Sum[Liquidation Fee(Symbol i) * Abs(Notional i)]</p>
-<p>High Tier Liquidation (1 symbol):
-    User Liquidation Fee = Liquidation Fee(Symbol i) * Abs(Notional i)</p>
+Low Tier Liquidation (multiple symbols):</p>
+<div class="language-text highlight"><pre><span></span><code>User Liquidation Fee = Sum[Liquidation Fee(Symbol i) * Abs(Notional i)]
+</code></pre></div>
+<p>High Tier Liquidation (1 symbol):</p>
+<div class="language-text highlight"><pre><span></span><code>User Liquidation Fee = Liquidation Fee(Symbol i) * Abs(Notional i)
+</code></pre></div>
 <h1 id="fees">Fees</h1>
 <h2 id="cost-position">Cost Position</h2>
 <p>The cost position is the average price at which a trader opens their position, including any associated costs like trading and funding fees. It is used to calculate unrealized PnL.</p>
