@@ -1,7 +1,13 @@
+import os
+
 from setuptools import setup, find_packages
+
+def get_version():
+    return os.getenv("PACKAGE_VERSION", "0.0.0")
 
 setup(
     name='emp-orderly-types',
+    version=get_version(),
     python_requires='>=3.10, <3.13',
     install_requires=[
         'base58==2.1.1',
