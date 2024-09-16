@@ -34,7 +34,7 @@
 
         - name: Test with tox
           run: |
-            tox -p -e py${{ matrix.python }}-build_emp_orderly_types
+            tox -e py${{ matrix.python }}-build_emp_orderly_types
     
         - name: Publish All Packages
           env:
