@@ -7,7 +7,7 @@ def get_version():
 
 
 setup(
-    name='emp-orderly-types',
+    name='emp-orderly',
     version=get_version(),
     python_requires='>=3.10, <3.13',
     install_requires=[
