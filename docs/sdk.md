@@ -1,3 +1,3 @@
-Market Info for an Orderly Asset
+An SDK for interacting with Orderly Accounts
 
-::: packages.emp_orderly.account
+::: packages.emp_orderly.account.EmpyrealOrderlySDK

@@ -2,6 +2,9 @@
 
 ```python
 
+from emp_orderly import EmpOrderly, Strategy
+from emp_orderly_types import *
+
 # define a trading strategy.  The only method necessary is the next method,
 # which can access the current/historical prices and make buy/sell orders and limit orders.
 class SmaCross(Strategy):
@@ -19,6 +22,9 @@ class SmaCross(Strategy):
         self.sma2 = self.I(SMA, close, self.n2)
 
     def next(self):
+        # self.data: access the current OHLCV
+        # self.position: Position
+
         if crossover(self.sma1, self.sma2):
             self.position.close()
             self.buy(size=0.5)
@@ -28,25 +34,26 @@ class SmaCross(Strategy):
 
 
 # next we can create a new instance of EmpOrderly with an initial amount of cash and a commission
-sdk = EmpOrderly(
+emp_orderly = EmpOrderly(
     cash=1000,
     commission=.0001,
-    exclusive_orders=True
+    exclusive_orders=True,
+    sdk=EmpyrealOrderlySDK(pvt_hex=pvt_hex, account_id=orderly_id, is_testnet=True),
 )
 
 # Then we can load the strategy to the SDK, and load historical data to use for backtesting
-sdk.set_strategy(SmaCross)
-await sdk.load_data(
+emp_orderly.set_strategy(SmaCross)
+await emp_orderly.load_data(
     lookback=5,
     interval=Interval.five_minute,
     asset=PerpetualAssetType.APT,
 )
 
 # backtest
-sdk.backtest()
+emp_orderly.backtest()
 
 # plot
-sdk.plot(show_price_data=False)
+emp_orderly.plot(show_price_data=False)
 plt.show()
 ```
 
