@@ -12,7 +12,9 @@ setup(
     python_requires='>=3.10, <3.13',
     install_requires=[
         'base58==2.1.1',
+        "bokeh==3.4.1",
         'cryptography==42.0.5',
+        'eth-rpc-py==0.1.8post6',
         'eth-typing==4.1.0',
         'eth-utils==4.1.0',
         'httpx==0.27.0',
@@ -27,4 +29,8 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
     ],
+    package_data={
+        '': ['*.js'],  # Include all JavaScript files
+    },
+    include_package_data=True,  # Ensure package_data is included
 )
