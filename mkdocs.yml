@@ -47,6 +47,7 @@ plugins:
     default_handler: python
     handlers:
       python:
+        paths: [packages/emp_orderly_types/src, packages/emp_orderly/src]
         options:
           show_signature_annotations: true
 
