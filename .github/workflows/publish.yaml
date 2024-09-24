@@ -34,11 +34,19 @@
 
         - name: Test with tox
           run: |
+            tox -e py${{ matrix.python }}-build_emp_orderly
             tox -e py${{ matrix.python }}-build_emp_orderly_types
     
-        - name: Publish All Packages
+        - name: Publish emp_orderly_types
           env:
             TWINE_USERNAME: __token__
             TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
           run: |
             twine upload --repository pypi packages/emp_orderly_types/dist/*
+
+        - name: Publish emp_orderly
+          env:
+            TWINE_USERNAME: __token__
+            TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+          run: |
+            twine upload --repository pypi packages/emp_orderly/dist/*
